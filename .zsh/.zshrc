@@ -17,7 +17,6 @@ fi
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
 # Load a prompt
-# zcomet load agkozak/agkozak-zsh-prompt
 zcomet load romkatv/powerlevel10k
 
 # Personal Options
@@ -57,9 +56,6 @@ zcomet load marlonrichert/zsh-autocomplete
 # zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load zdharma-continuum/fast-syntax-highlighting
 zcomet load zsh-users/zsh-autosuggestions
-
-# One line prompt
-AGKOZAK_MULTILINE=0
 
 # Run compinit and compile its cache
 zcomet compinit
