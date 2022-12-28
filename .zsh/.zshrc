@@ -55,7 +55,7 @@ zcomet load marlonrichert/zsh-autocomplete
 # It is good to load these popular plugins last, and in this order:
 # zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load zdharma-continuum/fast-syntax-highlighting
-zcomet load zsh-users/zsh-autosuggestions
+# zcomet load zsh-users/zsh-autosuggestions
 
 # Run compinit and compile its cache
 zcomet compinit
