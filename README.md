@@ -1,3 +1,5 @@
-# dotfiles  
-Collection of my dotfiles & configs for linux.  
-Uses [zcomet](https://zcomet.io/ "zcomet - Fast, Simple Zsh Plugin Manager") for managing zsh plugins.
+# dotfiles
+
+Collection of my dotfiles & configs for linux.
+
+Requires [tmux](https://github.com/tmux/tmux) and [zoxide](https://github.com/ajeetdsouza/zoxide).
