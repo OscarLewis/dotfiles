@@ -1,0 +1,98 @@
+# Otto zsh
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+## End of Zinit's installer chunk
+
+# Add additional fpath array entries
+fpath+=(/home/oscar/.zsh/completions)
+
+# Completion settings
+zstyle :compinstall filename '/home/oscar/.zshrc'
+autoload -Uz compinit
+compinit
+
+# Replay completions
+zinit cdreplay -q
+
+# History Settings
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+bindkey -e
+
+# Key binds
+bindkey "^[[3~" delete-char # Delete key
+bindkey  "^[[H"   beginning-of-line # Home key
+bindkey  "^[[F"   end-of-line # End key
+bindkey "^[[1;5D" backward-word  # Control + Left Arrow
+bindkey "^[[1;5C" forward-word   # Control + Right Arrow
+
+# Editor config
+export EDITOR=hx
+export VISUAL=$EDITOR
+
+# Alias for eza
+alias ez='eza'
+
+# Alias for bat
+alias bat='batcat'
+
+# Load promptinit
+autoload -Uz promptinit
+promptinit
+
+# Define the theme
+prompt_ottotheme_setup() {
+  PS1='%F{blue}%n%f@%F{green}%m%f:%F{green}%~%f%% '
+}
+
+# Add the theme to promptsys
+prompt_themes+=( ottotheme )
+
+# Load the theme
+prompt ottotheme
+
+# zinit plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Completion styling
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Setup fzf and zoxide for quick navigation
+source <(fzf --zsh)
+eval "$(zoxide init zsh)"
