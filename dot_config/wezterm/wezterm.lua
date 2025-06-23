@@ -231,6 +231,14 @@ config.pane_focus_follows_mouse = true
 config.scrollback_lines = 5000
 
 -- Quick domains plugin
-domains.apply_to_config(config)
+domains.apply_to_config(config, {
+   keys = {
+      attach = {
+        key  = 's',
+        mods = 'SHIFT',
+        tbl  = 'tmux'
+      },
+    }
+})
 
 return config
