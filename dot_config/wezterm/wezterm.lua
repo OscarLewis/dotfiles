@@ -234,9 +234,9 @@ config.scrollback_lines = 5000
 domains.apply_to_config(config, {
    keys = {
       attach = {
-        key  = 's',
-        mods = 'SHIFT',
-        tbl  = 'tmux'
+        key  = 'd',
+        mods = 'LEADER|CTRL',
+        tbl  = ''
       },
     }
 })
