@@ -225,8 +225,6 @@ config.keys = {
 --     })
 -- end
 
-config.pane_focus_follows_mouse = true
-
 config.scrollback_lines = 5000
 
 return config
