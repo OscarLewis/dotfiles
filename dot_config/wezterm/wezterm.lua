@@ -2,7 +2,6 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 local act = wezterm.action
 local mux = wezterm.mux
-local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
 
 -- Unix domain
 config.unix_domains = {
@@ -65,7 +64,7 @@ config.line_height = 1
 
 -- Leader config
 config.leader = {
-  key = 'q',
+  key = 'e',
   mods = 'ALT',
   timeout_milliseconds = 2000
 }
@@ -229,16 +228,5 @@ config.keys = {
 config.pane_focus_follows_mouse = true
 
 config.scrollback_lines = 5000
-
--- Quick domains plugin
-domains.apply_to_config(config, {
-   keys = {
-      attach = {
-        key  = 'd',
-        mods = 'LEADER|CTRL',
-        tbl  = ''
-      },
-    }
-})
 
 return config

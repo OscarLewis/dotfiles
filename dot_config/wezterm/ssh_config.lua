@@ -7,7 +7,7 @@ local config = config_builder()
 
 local ssh_domains = {}
 
-for host, config in pairs(wezterm.enumerate_ssh_hosts()) do
+for host, config in pairs(wezterm.enumerate_ssh_hosts({"~/.ssh/config"})) do
   table.insert(ssh_domains, {
     -- the name can be anything you want; we're just using the hostname
     name = host,
