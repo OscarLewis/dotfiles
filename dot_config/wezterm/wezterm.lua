@@ -3,6 +3,10 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 local mux = wezterm.mux
 
+-- Max FPS
+config.max_fps = 144
+
+
 -- Unix domain
 config.unix_domains = {
   {
@@ -20,8 +24,29 @@ local ssh_domains = require("ssh_config")
 -- TODO: Add backup/fallback fonts
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 
+-- Cursor style
+config.default_cursor_style = 'SteadyBar'
+
 -- Theme settings
-config.color_scheme = 'Everblush'
+
+-- Everblush does not support Wezterm select text.
+-- This is currently installed in the /colors/ directory of wizterm config.
+-- config.color_scheme = 'Everblush'
+
+-- Catppuccin & varients support Wezterm select text. https://github.com/catppuccin/wezterm
+config.color_scheme = "Catppuccin Mocha"
+
+-- Frappe is okay, it's lighter than Mocha, which I think I do not perfer.
+-- config.color_scheme = "Catppuccin Frappe
+
+-- Rose pine moon just turns the selected text white which isn't great, also much brighter than Mocha.
+-- config.color_scheme = "rose-pine-moon"
+
+-- Ayu Mirage looks interesting, a leading canidate.
+config.color_scheme = 'Ayu Mirage'
+
+-- Ayu Mirage Gogh variant, not that different in my config.
+-- config.color_scheme = 'Ayu Mirage (Gogh)'
 
 -- Window settings
 config.window_decorations = "TITLE|RESIZE"
