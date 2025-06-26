@@ -21,7 +21,6 @@ config.unix_domains = {
 local ssh_domains = require("ssh_config")
 
 -- Font settings
--- TODO: Add backup/fallback fonts
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 
 -- Cursor style
@@ -43,21 +42,29 @@ config.default_cursor_style = 'SteadyBar'
 -- Rose pine moon just turns the selected text white which isn't great, also much brighter than Mocha.
 -- config.color_scheme = "rose-pine-moon"
 
-
-
--- Ayu Mirage looks interesting, a leading canidate.
+-- Ayu Mirage looks nice.
 -- It has a nice helix theme, however as you can see it doesn't highlight the config.variable
 -- like Catppuccin or the default theme do.
 -- config.color_scheme = 'Ayu Mirage'
+-- gruvbox_dark_hard is my favorite gruvbox varient.
+-- horizon-dark is nice.
+-- jetbrains_dark is a classic.
+-- onedarker is nice, I like the green, blue, and purple.
+-- config.color_scheme = 'onedarker'
 
--- One half dark is nice!
+-- One half dark is nice and highlights copy mode selections!
 config.color_scheme = 'OneHalfDark'
 
 -- Ayu Mirage Gogh variant, not that different in my config.
 -- config.color_scheme = 'Ayu Mirage (Gogh)'
 
-
-
+-- Theme overrides
+-- NOTE: There can only be only one 'config.colors' object across the entire config.
+config.colors = {
+    -- Cursor color (I like it orange)
+    cursor_border = '#ff8811',
+    cursor_bg = '#ff8811'
+}
 
 
 -- Window settings
@@ -89,13 +96,6 @@ config.switch_to_last_active_tab_when_closing_tab = true
 --   -- the window is not focused
 --   inactive_titlebar_bg = '#141b1e',
 -- }
-
-config.colors = {
-  tab_bar = {
-    -- The color of the inactive tab bar edge/divider
-    inactive_tab_edge = '#575757',
-  },
-}
 
 -- Line height settings
 config.line_height = 1
@@ -169,7 +169,7 @@ config.leader = {
 
 -- Key binds
 config.keys = {
-  -- Helix motions
+  -- Helix (neovim is spooky 😱) motions to move between panes
   -- CTRL + (h,j,k,l) to move between panes
   {
     key = 'h',
@@ -191,25 +191,26 @@ config.keys = {
     mods = 'CTRL',
     action =  act({ ActivatePaneDirection = "Right" })
   },
+  -- Helix motions to adjust panel size
   {
     key = 'h',
     mods = 'ALT',
-    action =  act.AdjustPaneSize { 'Left', 5 },
+    action =  act.AdjustPaneSize {'Left', 5},
   },
   {
     key = 'j',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Down", 5 },
+    action =   act.AdjustPaneSize {"Down", 5},
   },
   {
     key = 'k',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Up", 5 },
+    action =   act.AdjustPaneSize {"Up", 5},
   },
   {
     key = 'l',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Right", 5 },
+    action =   act.AdjustPaneSize {"Right", 5},
   },
   -- Zoom on pane
   {
