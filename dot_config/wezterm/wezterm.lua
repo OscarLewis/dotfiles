@@ -34,7 +34,8 @@ config.default_cursor_style = 'SteadyBar'
 -- config.color_scheme = 'Everblush'
 
 -- Catppuccin & varients support Wezterm select text. https://github.com/catppuccin/wezterm
-config.color_scheme = "Catppuccin Mocha"
+-- I also like that it themes the tab bar very nicely, however that's not a need.
+-- config.color_scheme = "Catppuccin Mocha"
 
 -- Frappe is okay, it's lighter than Mocha, which I think I do not perfer.
 -- config.color_scheme = "Catppuccin Frappe
@@ -42,14 +43,26 @@ config.color_scheme = "Catppuccin Mocha"
 -- Rose pine moon just turns the selected text white which isn't great, also much brighter than Mocha.
 -- config.color_scheme = "rose-pine-moon"
 
+
+
 -- Ayu Mirage looks interesting, a leading canidate.
-config.color_scheme = 'Ayu Mirage'
+-- It has a nice helix theme, however as you can see it doesn't highlight the config.variable
+-- like Catppuccin or the default theme do.
+-- config.color_scheme = 'Ayu Mirage'
+
+-- One half dark is nice!
+config.color_scheme = 'OneHalfDark'
 
 -- Ayu Mirage Gogh variant, not that different in my config.
 -- config.color_scheme = 'Ayu Mirage (Gogh)'
 
+
+
+
+
 -- Window settings
 config.window_decorations = "TITLE|RESIZE"
+-- config.window_decorations = "RESIZE"
 
 -- Tab settings
 config.tab_bar_at_bottom = true
@@ -94,6 +107,66 @@ config.leader = {
   timeout_milliseconds = 2000
 }
 
+-- TODO: Make this nicer and format it on the tab bar but seperate from the tabs.
+-- wezterm.on('format-tab-title', function(tab)
+--   local pane = tab.active_pane
+--   local title = pane.title
+--   if pane.domain_name then
+--     title = title .. ' - (' .. string.sub(pane.domain_name,1,5) .. ')'
+--   end
+--   return title
+-- end)
+
+-- local function toggle_zoom_and_rename(win, pane)
+--   -- Define the indicator you want to use for a zoomed pane.
+--   -- Using a space at the beginning prevents it from looking cramped.
+--   local zoom_indicator = ' 🔭'
+--   wezterm.log_info 'zoom function activated.'
+--   -- Get the Tab object for the active tab.
+--   local active_tab = win:active_tab()
+--   if not active_tab then
+--     return
+--   end
+
+--   -- Get the current title of the active tab.
+--   local current_title = active_tab:get_title()
+--   if current_title == "" then
+--     current_title = "None"
+--   wezterm.log_info(string.format('active tab is: %s', current_title))
+
+--   -- First, perform the action to toggle the zoom state.
+--   -- We do this first to know what the *new* state is.
+--   win:perform_action(wezterm.action.TogglePaneZoomState, pane)
+
+--   for _, info in ipairs(pane:panes_with_info()) do
+--       wezterm.log_info(string.format("Pane is zoomed: %s", info.is_zoomed))
+--   end
+
+--   -- After toggling, we check if the pane is now zoomed.
+--   -- The is_zoomed() method returns true if the pane is zoomed.
+--   for _, info in ipairs(active_tab:panes_with_info()) do
+--       wezterm.log_info(string.format("Pane is zoomed: %s", info.is_zoomed))
+--       if info.is_zoomed then
+--       pane_title = info.pane:get_title()
+--       wezterm.log_info(string.format("Pane title is '%s'.", pane_title))
+--       wezterm.log_info 'pane was zoomed.'
+--       -- If the pane is now zoomed, we want to add the indicator.
+--       -- We'll also check to make sure we don't add it multiple times
+--       -- if the title somehow already has it.
+--       -- if not current_title:find(zoom_indicator, 1, true) then
+--       --   active_tab:set_title(current_title .. zoom_indicator)
+--       -- end
+--     end
+--   end
+--   else
+--     -- If the pane is not zoomed, we want to remove the indicator.
+--     -- string.gsub finds and replaces the indicator with an empty string.
+--     local new_title = current_title:gsub(zoom_indicator, '')
+--     active_tab:set_title(new_title)
+--   end
+-- end
+
+
 -- Key binds
 config.keys = {
   -- Helix motions
@@ -118,6 +191,40 @@ config.keys = {
     mods = 'CTRL',
     action =  act({ ActivatePaneDirection = "Right" })
   },
+  {
+    key = 'h',
+    mods = 'ALT',
+    action =  act.AdjustPaneSize { 'Left', 5 },
+  },
+  {
+    key = 'j',
+    mods = 'ALT',
+    action =   act.AdjustPaneSize {"Down", 5 },
+  },
+  {
+    key = 'k',
+    mods = 'ALT',
+    action =   act.AdjustPaneSize {"Up", 5 },
+  },
+  {
+    key = 'l',
+    mods = 'ALT',
+    action =   act.AdjustPaneSize {"Right", 5 },
+  },
+  -- Zoom on pane
+  {
+    key = 'z',
+    mods = 'LEADER',
+    action = act.TogglePaneZoomState
+  },
+  -- Zoom on pane and indicate on tab bar
+  -- {
+  --   key = 'z',
+  --   mods = 'LEADER',
+  --   action = wezterm.action_callback(function(win, pane)
+  --     toggle_zoom_and_rename(win, pane)
+  --    end)
+  -- },
   -- Attach to muxer
   {
     key = 'a',
