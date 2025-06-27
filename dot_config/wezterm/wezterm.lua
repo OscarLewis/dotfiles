@@ -97,12 +97,14 @@ wezterm.on('update-status', function(window, pane)
   local domain = pane:get_domain_name()
   local print_text = domain or ""
   local month_day = wezterm.strftime '%_m.%d'
+    local color_scheme = window:effective_config().resolved_palette
+
 
   -- Currently title is not being used
   -- local title = pane:get_title()
 
   window:set_right_status(wezterm.format({
-    { Foreground = { color = "#61afef" } },
+    { Foreground = { Color = "#61afef" } },
     -- 0xebc8 is the tmux icon and 0xf455 is the calendar.
     -- Extra spaces are added to make the appearance more uniform.
     { Text =  utf8.char(0xebc8) .. ' ' .. print_text .. ' ' .. utf8.char(0xf455)  .. month_day .. ' '}, 
