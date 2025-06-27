@@ -20,6 +20,16 @@ config.unix_domains = {
 -- Load SSH settings
 local ssh_domains = require("ssh_config")
 
+-- -- Temporarily hardcode one entry for direct testing
+-- config.ssh_domains = {
+--   {
+--     name = 'otto', -- USE THIS NAME IN COMMAND PALETTE
+--     remote_address = 'otto.stoscar.org', -- YOUR ACTUAL REMOTE
+--     assume_shell = 'Posix',
+--     -- multiplexing is default to WezTerm, so no need to explicitly set it
+--   },
+-- }
+
 -- Font settings
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 
@@ -31,17 +41,13 @@ config.default_cursor_style = 'SteadyBar'
 -- Everblush does not support Wezterm select text.
 -- This is currently installed in the /colors/ directory of wizterm config.
 -- config.color_scheme = 'Everblush'
-
 -- Catppuccin & varients support Wezterm select text. https://github.com/catppuccin/wezterm
 -- I also like that it themes the tab bar very nicely, however that's not a need.
 -- config.color_scheme = "Catppuccin Mocha"
-
 -- Frappe is okay, it's lighter than Mocha, which I think I do not perfer.
 -- config.color_scheme = "Catppuccin Frappe
-
 -- Rose pine moon just turns the selected text white which isn't great, also much brighter than Mocha.
 -- config.color_scheme = "rose-pine-moon"
-
 -- Ayu Mirage looks nice.
 -- It has a nice helix theme, however as you can see it doesn't highlight the config.variable
 -- like Catppuccin or the default theme do.
@@ -60,12 +66,12 @@ config.color_scheme = 'OneHalfDark'
 
 -- Theme overrides
 -- NOTE: There can only be only one 'config.colors' object across the entire config.
+local jennyOrange = '#ff8811'
 config.colors = {
     -- Cursor color (I like it orange)
-    cursor_border = '#ff8811',
-    cursor_bg = '#ff8811'
+    cursor_border = jennyOrange,
+    cursor_bg = jennyOrange
 }
-
 
 -- Window settings
 config.window_decorations = "TITLE|RESIZE"
@@ -75,27 +81,6 @@ config.window_decorations = "TITLE|RESIZE"
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.switch_to_last_active_tab_when_closing_tab = true
--- config.window_frame = {
-  -- The font used in the tab bar.
-  -- Roboto Bold is the default; this font is bundled
-  -- with wezterm.
-  -- Whatever font is selected here, it will have the
-  -- main font setting appended to it to pick up any
-  -- fallback fonts you may have used there.
---   font = wezterm.font { family = 'Roboto', weight = 'Bold' },
---   -- font = wezterm.font 'FiraCode Nerd Font',
---   -- The size of the font in the tab bar.
---   -- Default to 10.0 on Windows but 12.0 on other systems
---   font_size = 12.0,
-
---   -- The overall background color of the tab bar when
---   -- the window is focused
---   -- active_titlebar_bg = '#232a2d',
---   active_titlebar_bg = '#67b0e8',
---   -- The overall background color of the tab bar when
---   -- the window is not focused
---   inactive_titlebar_bg = '#141b1e',
--- }
 
 -- Line height settings
 config.line_height = 1
@@ -107,15 +92,25 @@ config.leader = {
   timeout_milliseconds = 2000
 }
 
--- TODO: Make this nicer and format it on the tab bar but seperate from the tabs.
--- wezterm.on('format-tab-title', function(tab)
---   local pane = tab.active_pane
---   local title = pane.title
---   if pane.domain_name then
---     title = title .. ' - (' .. string.sub(pane.domain_name,1,5) .. ')'
---   end
---   return title
--- end)
+-- Display current domain and the date in right_status
+wezterm.on('update-status', function(window, pane)
+  local domain = pane:get_domain_name()
+  local print_text = domain or ""
+  local month_day = wezterm.strftime '%_m.%d'
+
+  -- Currently title is not being used
+  -- local title = pane:get_title()
+
+  window:set_right_status(wezterm.format({
+    { Foreground = { AnsiColor = "Blue" } },
+    -- 0xebc8 is the tmux icon and 0xf455 is the calendar.
+    -- Extra spaces are added to make the appearance more uniform.
+    { Text =  utf8.char(0xebc8) .. ' ' .. print_text .. ' ' .. utf8.char(0xf455)  .. month_day .. ' '}, 
+
+  }))
+end)
+
+
 
 -- local function toggle_zoom_and_rename(win, pane)
 --   -- Define the indicator you want to use for a zoomed pane.

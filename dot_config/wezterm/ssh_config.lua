@@ -19,7 +19,8 @@ for host, config in pairs(wezterm.enumerate_ssh_hosts({"~/.ssh/config"})) do
     -- ssh connection that supports multiple panes/tabs which will close
     -- when the connection is dropped.
 
-    -- multiplexing = "None",
+    -- Wezterm used by default
+    -- multiplexing = "WezTerm",
 
     -- if you know that the remote host has a posix/unix environment,
     -- setting assume_shell = "Posix" will result in new panes respecting
@@ -27,6 +28,7 @@ for host, config in pairs(wezterm.enumerate_ssh_hosts({"~/.ssh/config"})) do
     assume_shell = 'Posix',
   })
 end
+
 
 return {
   ssh_domains = ssh_domains,
