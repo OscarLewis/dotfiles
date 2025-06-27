@@ -102,7 +102,7 @@ wezterm.on('update-status', function(window, pane)
   -- local title = pane:get_title()
 
   window:set_right_status(wezterm.format({
-    { Foreground = { AnsiColor = "Blue" } },
+    { Foreground = { color = "#61afef" } },
     -- 0xebc8 is the tmux icon and 0xf455 is the calendar.
     -- Extra spaces are added to make the appearance more uniform.
     { Text =  utf8.char(0xebc8) .. ' ' .. print_text .. ' ' .. utf8.char(0xf455)  .. month_day .. ' '}, 
