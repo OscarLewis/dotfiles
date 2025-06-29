@@ -20,16 +20,6 @@ config.unix_domains = {
 -- Load SSH settings
 local ssh_domains = require("ssh_config")
 
--- -- Temporarily hardcode one entry for direct testing
--- config.ssh_domains = {
---   {
---     name = 'otto', -- USE THIS NAME IN COMMAND PALETTE
---     remote_address = 'otto.stoscar.org', -- YOUR ACTUAL REMOTE
---     assume_shell = 'Posix',
---     -- multiplexing is default to WezTerm, so no need to explicitly set it
---   },
--- }
-
 -- Font settings
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 
@@ -68,9 +58,9 @@ config.color_scheme = 'OneHalfDark'
 -- NOTE: There can only be only one 'config.colors' object across the entire config.
 local jennyOrange = '#ff8811'
 config.colors = {
-    -- Cursor color (I like it orange)
-    cursor_border = jennyOrange,
-    cursor_bg = jennyOrange
+  -- Cursor color (I like it orange)
+  cursor_border = jennyOrange,
+  cursor_bg = jennyOrange
 }
 
 -- Window settings
@@ -97,17 +87,19 @@ wezterm.on('update-status', function(window, pane)
   local domain = pane:get_domain_name()
   local print_text = domain or ""
   local month_day = wezterm.strftime '%_m.%d'
-    local color_scheme = window:effective_config().resolved_palette
-
+  local color_scheme = window:effective_config().resolved_palette
+  local workspace_title = window:active_workspace()
+  -- local print_workspace = workspace or "default"
 
   -- Currently title is not being used
   -- local title = pane:get_title()
-
+  local right_status_text = utf8.char(0xf52e) .. ' ' .. workspace_title ..
+      ' ' .. utf8.char(0xebc8) .. ' ' .. print_text .. ' ' .. utf8.char(0xf455) .. month_day .. ' '
   window:set_right_status(wezterm.format({
     { Foreground = { Color = "#61afef" } },
     -- 0xebc8 is the tmux icon and 0xf455 is the calendar.
     -- Extra spaces are added to make the appearance more uniform.
-    { Text =  utf8.char(0xebc8) .. ' ' .. print_text .. ' ' .. utf8.char(0xf455)  .. month_day .. ' '}, 
+    { Text = right_status_text },
 
   }))
 end)
@@ -171,43 +163,43 @@ config.keys = {
   {
     key = 'h',
     mods = 'CTRL',
-    action =  act({ ActivatePaneDirection = "Left" })
+    action = act({ ActivatePaneDirection = "Left" })
   },
   {
     key = 'j',
     mods = 'CTRL',
-    action =  act({ ActivatePaneDirection = "Down" })
+    action = act({ ActivatePaneDirection = "Down" })
   },
   {
     key = 'k',
     mods = 'CTRL',
-    action =  act({ ActivatePaneDirection = "Up" })
+    action = act({ ActivatePaneDirection = "Up" })
   },
   {
     key = 'l',
     mods = 'CTRL',
-    action =  act({ ActivatePaneDirection = "Right" })
+    action = act({ ActivatePaneDirection = "Right" })
   },
   -- Helix motions to adjust panel size
   {
     key = 'h',
     mods = 'ALT',
-    action =  act.AdjustPaneSize {'Left', 5},
+    action = act.AdjustPaneSize { 'Left', 5 },
   },
   {
     key = 'j',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Down", 5},
+    action = act.AdjustPaneSize { "Down", 5 },
   },
   {
     key = 'k',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Up", 5},
+    action = act.AdjustPaneSize { "Up", 5 },
   },
   {
     key = 'l',
     mods = 'ALT',
-    action =   act.AdjustPaneSize {"Right", 5},
+    action = act.AdjustPaneSize { "Right", 5 },
   },
   -- Zoom on pane
   {
@@ -329,7 +321,7 @@ config.keys = {
     mods = 'LEADER',
     action = wezterm.action.ActivateTabRelative(1)
   },
-   -- Swap panes
+  -- Swap panes
   {
     -- {
     key = '{',
@@ -340,7 +332,7 @@ config.keys = {
   {
     key = 'l',
     mods = "LEADER|CTRL",
-    action = act.SendKey { key='l', mods='CTRL'},
+    action = act.SendKey { key = 'l', mods = 'CTRL' },
   }
 }
 
