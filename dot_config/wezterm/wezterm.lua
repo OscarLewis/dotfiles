@@ -54,13 +54,52 @@ config.color_scheme = 'OneHalfDark'
 -- Ayu Mirage Gogh variant, not that different in my config.
 -- config.color_scheme = 'Ayu Mirage (Gogh)'
 
--- Theme overrides
--- NOTE: There can only be only one 'config.colors' object across the entire config.
+
+-- Theme overrides.
 local jennyOrange = '#ff8811'
 config.colors = {
-  -- Cursor color (I like it orange)
   cursor_border = jennyOrange,
-  cursor_bg = jennyOrange
+  cursor_bg = jennyOrange,
+  tab_bar = {
+    -- The active tab is the one that has focus in the window
+    active_tab = {
+      -- The color of the text for the tab
+      fg_color = '#ffffff',
+      -- The color of the background area for the tab
+      bg_color = '#000000'
+    },
+    -- Inactive tabs are the tabs that do not have focus
+    inactive_tab = { fg_color = '#ffffff', bg_color = '#333333' },
+    -- You can configure some alternate styling when the mouse pointer
+    -- moves over inactive tabs
+    inactive_tab_hover = {
+      bg_color = '#1f1f1f',
+      fg_color = '#ffffff',
+      italic = true,
+
+      -- The same options that were listed under the `active_tab` section above
+      -- can also be used for `inactive_tab_hover`.
+    },
+    -- The new tab button that let you create new tabs
+    new_tab = {
+      bg_color = '#333333',
+      fg_color = '#ffffff',
+
+      -- The same options that were listed under the `active_tab` section above
+      -- can also be used for `new_tab`.
+    },
+
+    -- You can configure some alternate styling when the mouse pointer
+    -- moves over the new tab button
+    new_tab_hover = {
+      bg_color = '#1f1f1f',
+      fg_color = '#ffffff',
+      italic = true,
+
+      -- The same options that were listed under the `active_tab` section above
+      -- can also be used for `new_tab_hover`.
+    },
+  }
 }
 
 -- Window settings
