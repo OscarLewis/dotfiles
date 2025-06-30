@@ -54,6 +54,8 @@ config.color_scheme = 'OneHalfDark'
 -- Ayu Mirage Gogh variant, not that different in my config.
 -- config.color_scheme = 'Ayu Mirage (Gogh)'
 
+-- Command palette should use a white font for visibility.
+config.command_palette_fg_color = '#ffffff'
 
 -- Theme overrides.
 local jennyOrange = '#ff8811'
